@@ -13,7 +13,7 @@ class RSI:
     _rma_dn = EMA.class_type.instance_type
     _c1: nb.double
 
-    def __init__(self, period: int):
+    def __init__(self, period: int = 14):
         self.period = period
 
         self._rma_up = EMA(period)

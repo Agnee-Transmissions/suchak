@@ -16,7 +16,7 @@ class Fibo:
     _l_buf: nb.double[:]
     _l_idx: nb.int32
 
-    def __init__(self, period: int):
+    def __init__(self, period: int = 144):
         self.offset = period - 1
         self.period = period
 
