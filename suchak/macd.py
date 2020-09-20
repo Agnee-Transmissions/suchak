@@ -35,5 +35,5 @@ class MACD:
 
     def next(self, c: float) -> typing.Tuple[float, float]:
         macd = self._short_ema.next(c) - self._long_ema.next(c)
-        signal = self._signal_sma.next(c)
+        signal = self._signal_sma.next(macd)
         return macd, signal
