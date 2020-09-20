@@ -1,23 +1,23 @@
 import numba as nb
 
-from suchak.sma import Sma
-from suchak.tr import Tr
+from suchak.sma import SMA
+from suchak.tr import TR
 from suchak.util import jitclass
 
 
 @jitclass
-class Atr:
+class ATR:
     offset: nb.int32
     period: nb.int32
 
-    _sma: Sma.class_type.instance_type
-    _tr: Tr.class_type.instance_type
+    _sma: SMA.class_type.instance_type
+    _tr: TR.class_type.instance_type
 
     def __init__(self, period: int):
         self.period = period
 
-        self._sma = Sma(period)
-        self._tr = Tr()
+        self._sma = SMA(period)
+        self._tr = TR()
 
         self.offset = self._sma.offset + self._tr.offset
 

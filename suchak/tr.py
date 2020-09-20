@@ -5,7 +5,7 @@ from suchak.util import jitclass
 
 
 @jitclass
-class Tr:
+class TR:
     offset: nb.int32
 
     _c1: nb.double

@@ -1,26 +1,22 @@
 import numba as nb
 import numpy as np
 
+from suchak.ma import MA
 from suchak.util import jitclass
 
 
 @jitclass
-class Sma:
+class SMA:
     offset: nb.int32
     period: nb.int32
 
-    _buf: nb.double[:]
-    _idx: nb.int32
+    _ma: MA.class_type.instance_type
 
     def __init__(self, period: int):
-        self.offset = period - 1
         self.period = period
 
-        self._buf = np.empty(period)
-        self._buf[:] = np.nan
-        self._idx = 0
+        self._ma = MA(period)
+        self.offset = self._ma.offset
 
     def next(self, x: float) -> float:
-        self._buf[self._idx] = x
-        self._idx = (self._idx + 1) % self.period
-        return np.sum(self._buf) / self.period
+        return np.sum(self._ma.next(x)) / self.period

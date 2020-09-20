@@ -2,11 +2,11 @@ import numpy as np
 import tulipy as ta
 from pytest import approx
 
-from suchak.atr import Atr
+from suchak.atr import ATR
 from suchak.fibo import Fibo
-from suchak.sma import Sma
+from suchak.sma import SMA
 from suchak.supertrend import Supertrend
-from suchak.tr import Tr
+from suchak.tr import TR
 
 SIZE = 64
 
@@ -15,10 +15,11 @@ def test_sma():
     c = np.random.random(SIZE)
     length = 14
 
-    sma = Sma(length)
+    sma = SMA(length)
 
     for i in range(sma.offset):
-        sma.next(c[i])
+        nan = sma.next(c[i])
+        assert np.isnan(nan)
 
     computed = ta.sma(c, length)
 
@@ -32,10 +33,11 @@ def test_sma():
 def test_tr():
     h, l, c = np.random.random((3, SIZE))
 
-    tr = Tr()
+    tr = TR()
 
     for i in range(tr.offset):
-        tr.next(h[i], l[i], c[i])
+        nan = tr.next(h[i], l[i], c[i])
+        assert np.isnan(nan)
 
     computed = ta.tr(h, l, c)
 
@@ -50,10 +52,11 @@ def test_atr():
     h, l, c = np.random.random((3, SIZE))
     period = 5
 
-    atr = Atr(period)
+    atr = ATR(period)
 
     for i in range(atr.offset):
-        atr.next(h[i], l[i], c[i])
+        nan = atr.next(h[i], l[i], c[i])
+        assert np.isnan(nan)
 
     computed = ta.sma(ta.tr(h, l, c), period)
 
@@ -72,7 +75,8 @@ def test_supertrend():
     supertrend = Supertrend(period, factor)
 
     for i in range(supertrend.offset):
-        supertrend.next(h[i], l[i], c[i])
+        st, _ = supertrend.next(h[i], l[i], c[i])
+        assert np.isnan(st)
 
     computed = ti_supertrend(h, l, c, period, factor)
 

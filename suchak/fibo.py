@@ -7,6 +7,7 @@ from suchak.util import jitclass
 @jitclass
 class Fibo:
     offset: nb.int32
+
     period: nb.int32
 
     _h_buf: nb.double[:]

@@ -2,6 +2,10 @@ import typing
 from numba.experimental import jitclass as _jitclass
 
 
+def arr():
+    pass
+
+
 def jitclass(cls: typing.Type) -> typing.Type:
     try:
         spec = dict(cls.__annotations__)

@@ -3,7 +3,7 @@ import typing
 import numba as nb
 import numpy as np
 
-from suchak.atr import Atr
+from suchak.atr import ATR
 from suchak.util import jitclass
 
 
@@ -13,7 +13,7 @@ class Supertrend:
     period: nb.int32
     factor: nb.double
 
-    _atr: Atr.class_type.instance_type
+    _atr: ATR.class_type.instance_type
 
     _dt: nb.double
     _up1: nb.double
@@ -24,7 +24,7 @@ class Supertrend:
         self.period = period
         self.factor = factor
 
-        self._atr = Atr(period)
+        self._atr = ATR(period)
         self.offset = self._atr.offset
 
         self._dt = 1
