@@ -27,4 +27,8 @@ class RSI:
         up = max(c - self._c1, 0)
         dn = max(self._c1 - c, 0)
         rs = self._rma_up.next(up) / self._rma_dn.next(dn)
-        return rs / (1 + rs) * 100
+        res = rs / (1 + rs) * 100
+
+        self._c1 = c
+
+        return res
