@@ -11,7 +11,7 @@ class EMA:
     period: nb.int32
 
     _ema: nb.double
-    _sma: SMA.class_type.instance_type
+    _sma: SMA
     _alpha: nb.double
 
     def __init__(self, period: int):

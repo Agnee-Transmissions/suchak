@@ -5,7 +5,7 @@ from suchak.util import jitclass
 
 
 @jitclass
-class MA:
+class Window:
     offset: nb.int32
     period: nb.int32
 

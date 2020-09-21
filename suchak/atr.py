@@ -10,8 +10,8 @@ class ATR:
     offset: nb.int32
     period: nb.int32
 
-    _sma: SMA.class_type.instance_type
-    _tr: TR.class_type.instance_type
+    _sma: SMA
+    _tr: TR
 
     def __init__(self, period: int):
         self.period = period

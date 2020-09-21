@@ -13,7 +13,7 @@ class Supertrend:
     period: nb.int32
     factor: nb.double
 
-    _atr: ATR.class_type.instance_type
+    _atr: ATR
 
     _dt: nb.double
     _up1: nb.double

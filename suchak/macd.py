@@ -14,9 +14,9 @@ class MACD:
     long_period: nb.int32
     signal_period: nb.int32
 
-    _short_ema: EMA.class_type.instance_type
-    _long_ema: EMA.class_type.instance_type
-    _signal_sma: SMA.class_type.instance_type
+    _short_ema: EMA
+    _long_ema: EMA
+    _signal_sma: SMA
 
     def __init__(
         self, short_period: int = 12, long_period: int = 26, signal_period: int = 9
@@ -33,7 +33,8 @@ class MACD:
             self._short_ema.offset, self._long_ema.offset
         )
 
-    def next(self, c: float) -> typing.Tuple[float, float]:
+    def next(self, c: float) -> typing.Tuple[float, float, float]:
         macd = self._short_ema.next(c) - self._long_ema.next(c)
         signal = self._signal_sma.next(macd)
-        return macd, signal
+        hist = macd - signal
+        return macd, signal, hist

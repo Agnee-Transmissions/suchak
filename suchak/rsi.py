@@ -9,8 +9,8 @@ class RSI:
     offset: nb.int32
     period: nb.int32
 
-    _rma_up = EMA.class_type.instance_type
-    _rma_dn = EMA.class_type.instance_type
+    _rma_up: EMA
+    _rma_dn: EMA
     _c1: nb.double
 
     def __init__(self, period: int = 14):

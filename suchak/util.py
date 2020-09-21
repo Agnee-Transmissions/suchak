@@ -1,5 +1,6 @@
 import typing
 from numba.experimental import jitclass as _jitclass
+from numba.experimental.jitclass.base import JitClassType
 
 
 def jitclass(cls: typing.Type) -> typing.Type:
@@ -10,7 +11,7 @@ def jitclass(cls: typing.Type) -> typing.Type:
         spec = {}
 
     values = {}
-    for name in spec:
+    for name, typ in spec.items():
         try:
             value = getattr(cls, name)
         except AttributeError:
@@ -18,6 +19,9 @@ def jitclass(cls: typing.Type) -> typing.Type:
         else:
             values[name] = value
             delattr(cls, name)
+
+        if isinstance(typ, JitClassType):
+            spec[name] = typ.class_type.instance_type
 
     cls = _jitclass(spec)(cls)
 
