@@ -27,7 +27,7 @@ class MACD:
 
         self._short_ema = EMA(short_period)
         self._long_ema = EMA(long_period)
-        self._signal_sma = EMA(signal_period)
+        self._signal_sma = SMA(signal_period)
 
         self.offset = self._signal_sma.offset + max(
             self._short_ema.offset, self._long_ema.offset
