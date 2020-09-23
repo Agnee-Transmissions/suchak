@@ -13,10 +13,14 @@ suchak is written in pure python using a magical piece of software - [numba](htt
 The API for all indicators is consistent & simple -
 
 ```python
-c = np.random.random(SIZE)
+import numpy as np
+import suchak
+
+
+c = np.random.random(64)
 length = 14
 
-sma = SMA(length)
+sma = suchak.SMA(length)
 
 for ci in c:
     smai = sma.next(ci)
