@@ -1,3 +1,7 @@
+```
+pip install suchak
+```
+
 Suchak is a technical indicator library that supports incremental computation / streaming API.
 
 In live-trading, this makes it faster than comparable libraries written in C.
