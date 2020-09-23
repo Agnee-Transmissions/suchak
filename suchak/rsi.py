@@ -28,7 +28,12 @@ class RSI:
     def next(self, c: float):
         up = max(c - self._c1, 0)
         dn = max(self._c1 - c, 0)
-        rs = self._rma_up.next(up) / self._rma_dn.next(dn)
+
+        dn_next = self._rma_dn.next(dn)
+        if dn_next == 0:
+            rs = np.nan
+        else:
+            rs = self._rma_up.next(up) / dn_next
         res = rs / (1 + rs) * 100
 
         self._c1 = c
