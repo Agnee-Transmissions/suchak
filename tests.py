@@ -1,14 +1,34 @@
+import numba
 import numpy as np
 import tulipy as ta
+from numba import njit
 from pytest import approx
 
 from suchak.atr import ATR
 from suchak.fibo import Fibo
+from suchak.jitclass import jitclass
 from suchak.sma import SMA
 from suchak.supertrend import Supertrend
 from suchak.tr import TR
 
 SIZE = 64
+
+
+def test_jitclass():
+    @jitclass
+    class Foo:
+        x: numba.int32 = 42
+        y: numba.double
+
+        def __init__(self):
+            self.y = 4.2
+
+    @njit
+    def f():
+        foo = Foo()
+        return foo.x, foo.y
+
+    assert f() == (42, 4.2)
 
 
 def test_sma():

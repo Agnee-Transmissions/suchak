@@ -1,7 +1,8 @@
 import numba as nb
 import numpy as np
 
-from suchak.util import jitclass
+from suchak import Window
+from suchak.jitclass import jitclass
 
 
 @jitclass
@@ -10,33 +11,22 @@ class Fibo:
 
     period: nb.int32
 
-    _h_buf: nb.double[:]
-    _h_idx: nb.int32
-
-    _l_buf: nb.double[:]
-    _l_idx: nb.int32
+    _h_win: Window
+    _l_win: Window
 
     def __init__(self, period: int = 144):
         self.offset = period - 1
         self.period = period
 
-        self._h_buf = np.empty(period)
-        self._h_buf[:] = np.nan
-        self._h_idx = 0
-
-        self._l_buf = np.empty(period)
-        self._l_buf[:] = np.nan
-        self._l_idx = 0
+        self._h_win = Window(period)
+        self._l_win = Window(period)
 
     def next(self, h: float, l: float) -> np.ndarray:
-        self._h_buf[self._h_idx] = h
-        self._h_idx = (self._h_idx + 1) % self.period
+        h_arr = self._h_win.next(h)
+        l_arr = self._l_win.next(l)
 
-        self._l_buf[self._l_idx] = l
-        self._l_idx = (self._l_idx + 1) % self.period
-
-        h1 = np.max(self._h_buf)
-        l1 = np.min(self._l_buf)
+        h1 = np.max(h_arr)
+        l1 = np.min(l_arr)
         fark = h1 - l1
 
         fark236 = fark * 0.236
@@ -57,8 +47,8 @@ class Fibo:
         lh618 = h1 - fark618
         lh786 = h1 - fark786
 
-        hbars = np.argmax(self._h_buf)
-        lbars = np.argmin(self._l_buf)
+        hbars = np.argmax(h_arr)
+        lbars = np.argmin(l_arr)
 
         # pick the farthest one from last (lower idx)
         cond = hbars > lbars

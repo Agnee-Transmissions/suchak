@@ -4,21 +4,21 @@ import numba as nb
 import numpy as np
 
 from suchak.atr import ATR
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
 
 
 @jitclass
 class Supertrend:
     offset: nb.int32
     period: nb.int32
-    factor: nb.double
+    factor: nb.double = np.nan
 
     _atr: ATR
 
-    _dt: nb.double
-    _up1: nb.double
-    _dn1: nb.double
-    _c1: nb.double
+    _dt: nb.double = 1
+    _up1: nb.double = np.nan
+    _dn1: nb.double = np.nan
+    _c1: nb.double = np.nan
 
     def __init__(self, period: int = 5, factor: float = 3):
         self.period = period
@@ -26,11 +26,6 @@ class Supertrend:
 
         self._atr = ATR(period)
         self.offset = self._atr.offset
-
-        self._dt = 1
-        self._up1 = np.nan
-        self._dn1 = np.nan
-        self._c1 = np.nan
 
     def next(self, h: float, l: float, c: float) -> typing.Tuple[float, float]:
         f_atr = self.factor * self._atr.next(h, l, c)

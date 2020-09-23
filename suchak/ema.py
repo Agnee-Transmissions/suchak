@@ -2,7 +2,7 @@ import numba as nb
 import numpy as np
 
 from suchak.sma import SMA
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
 
 
 @jitclass
@@ -10,9 +10,9 @@ class EMA:
     offset: nb.int32
     period: nb.int32
 
-    _ema: nb.double
+    _ema: nb.double = np.nan
     _sma: SMA
-    _alpha: nb.double
+    _alpha: nb.double = np.nan
 
     def __init__(self, period: int):
         self.period = period

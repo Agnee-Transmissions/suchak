@@ -1,7 +1,8 @@
 import numba as nb
 
 from suchak.ema import EMA
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
+import numpy as np
 
 
 @jitclass
@@ -11,7 +12,7 @@ class RSI:
 
     _rma_up: EMA
     _rma_dn: EMA
-    _c1: nb.double
+    _c1: nb.double = np.nan
 
     def __init__(self, period: int = 14):
         self.period = period

@@ -2,7 +2,7 @@ import numba as nb
 
 from suchak.sma import SMA
 from suchak.tr import TR
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
 
 
 @jitclass

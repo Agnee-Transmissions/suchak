@@ -4,7 +4,7 @@ import numba as nb
 
 from suchak.ema import EMA
 from suchak.sma import SMA
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
 
 
 @jitclass

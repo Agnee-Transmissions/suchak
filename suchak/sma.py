@@ -1,7 +1,7 @@
 import numba as nb
 import numpy as np
 
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
 from suchak.window import Window
 
 

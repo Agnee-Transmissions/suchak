@@ -1,18 +1,14 @@
 import numba as nb
 import numpy as np
 
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
 
 
 @jitclass
 class TR:
-    offset: nb.int32
+    offset: nb.int32 = 0
 
-    _c1: nb.double
-
-    def __init__(self):
-        self.offset = 0
-        self._c1 = np.nan
+    _c1: nb.double = np.nan
 
     def next(self, h: float, l: float, c: float) -> float:
         if np.isnan(self._c1):

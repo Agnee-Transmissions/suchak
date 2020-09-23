@@ -1,7 +1,7 @@
 import numba as nb
 import numpy as np
 
-from suchak.util import jitclass
+from suchak.jitclass import jitclass
 
 
 @jitclass
@@ -10,7 +10,7 @@ class Window:
     period: nb.int32
 
     _buf: nb.double[:]
-    _idx: nb.int32
+    _idx: nb.int32 = 0
 
     def __init__(self, period: int):
         self.offset = period - 1
@@ -18,7 +18,6 @@ class Window:
 
         self._buf = np.empty(period)
         self._buf[:] = np.nan
-        self._idx = 0
 
     def next(self, x: float) -> np.ndarray:
         self._buf[self._idx] = x
