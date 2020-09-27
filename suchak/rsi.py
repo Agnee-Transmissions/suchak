@@ -39,3 +39,10 @@ class RSI:
         self._c1 = c
 
         return res
+
+    def next_arr(self, c_arr):
+        out_len = len(c_arr)
+        ret = np.empty(out_len)
+        for i in range(out_len):
+            ret[i] = self.next(c_arr[i])
+        return ret

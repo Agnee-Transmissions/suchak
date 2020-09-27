@@ -1,10 +1,11 @@
 import typing
 
 import numba as nb
+import numpy as np
 
 from suchak.ema import EMA
-from suchak.sma import SMA
 from suchak.jitclass import jitclass
+from suchak.sma import SMA
 
 
 @jitclass
@@ -38,3 +39,10 @@ class MACD:
         signal = self._signal_sma.next(macd)
         hist = macd - signal
         return macd, signal, hist
+
+    def next_arr(self, c_arr):
+        out_len = len(c_arr)
+        ret = np.empty((out_len, 3))
+        for i in range(out_len):
+            ret[i] = self.next(c_arr[i])
+        return ret

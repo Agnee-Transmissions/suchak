@@ -1,5 +1,6 @@
 import numba as nb
 import numpy as np
+import typing
 
 from suchak import Window
 from suchak.jitclass import jitclass
@@ -21,7 +22,11 @@ class Fibo:
         self._h_win = Window(period)
         self._l_win = Window(period)
 
-    def next(self, h: float, l: float) -> np.ndarray:
+    def next(
+        self, h: float, l: float
+    ) -> typing.Tuple[
+        float, float, float, float, float, float, float,
+    ]:
         h_arr = self._h_win.next(h)
         l_arr = self._l_win.next(l)
 
@@ -58,4 +63,11 @@ class Fibo:
         f618 = hl618 if cond else lh618
         f786 = hl786 if cond else lh786
 
-        return np.array([l1, h1, f236, f382, f500, f618, f786])
+        return l1, h1, f236, f382, f500, f618, f786
+
+    def next_arr(self, h_arr, l_arr):
+        out_len = len(h_arr)
+        ret = np.empty((out_len, 7))
+        for i in range(out_len):
+            ret[i] = self.next(h_arr[i], l_arr[i])
+        return ret
