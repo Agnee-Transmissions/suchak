@@ -110,6 +110,19 @@ def test_supertrend():
         assert ast == approx(est)
 
 
+def test_supertrend_arr():
+    h, l, c = np.random.random((3, SIZE))
+    period = 5
+    factor = 30
+
+    supertrend = Supertrend(period, factor)
+    actual = supertrend.next_arr(h, l, c)
+    computed = ti_supertrend(h, l, c, period, factor)
+    actual = actual[-len(computed) :]
+
+    assert np.all(actual == approx(computed))
+
+
 def test_fibo():
     h, l = np.random.random((2, SIZE))
     period = 32

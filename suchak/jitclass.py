@@ -66,7 +66,6 @@ def jitclass(cls: typing.Type) -> typing.Type:
         # print()
 
         exec(code, init_locals)
-
         cls.__init__ = init_locals["__jitcls__init__"]
 
     return _jitclass(spec)(cls)
