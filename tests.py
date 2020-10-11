@@ -129,11 +129,14 @@ def test_fibo():
 
     fibo = Fibo(period)
 
-    for i in range(SIZE):
+    for i in range(fibo.offset):
         actual = fibo.next(h[i], l[i])
 
-    expected = ti_fibo(h, l, period)
-    assert np.all(actual == approx(expected))
+    for i in range(fibo.offset, SIZE):
+        print(i)
+        actual = fibo.next(h[i], l[i])
+        expected = ti_fibo(h[: i + 1], l[: i + 1], period)
+        assert expected == approx(actual)
 
 
 # vectorized implementation for cross-verification
@@ -186,11 +189,14 @@ def ti_supertrend(
 
 
 # vectorized implementation for cross-verification
-def ti_fibo(h: np.ndarray, l: np.ndarray, length: int) -> np.ndarray:
+def ti_fibo(h: np.ndarray, l: np.ndarray, length: int) -> tuple:
     h, l = h[-length:], l[-length:]
 
-    l1 = np.min(l)
-    h1 = np.max(h)
+    hbars = np.argmax(h)
+    lbars = np.argmin(l)
+
+    h1 = h[hbars]
+    l1 = l[lbars]
     fark = h1 - l1
 
     fark236 = fark * 0.236
@@ -211,15 +217,12 @@ def ti_fibo(h: np.ndarray, l: np.ndarray, length: int) -> np.ndarray:
     lh618 = h1 - fark618
     lh786 = h1 - fark786
 
-    hbars = np.argmax(h)
-    lbars = np.argmin(l)
-
     # pick the farthest one from last (lower idx)
-    cond = hbars > lbars
+    cond = hbars < lbars
     f236 = hl236 if cond else lh236
     f382 = hl382 if cond else lh382
     f500 = hl500 if cond else lh500
     f618 = hl618 if cond else lh618
     f786 = hl786 if cond else lh786
 
-    return np.array([l1, h1, f236, f382, f500, f618, f786])
+    return l1, h1, f236, f382, f500, f618, f786

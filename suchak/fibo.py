@@ -2,7 +2,7 @@ import numba as nb
 import numpy as np
 import typing
 
-from suchak import Window
+from suchak import Deque
 from suchak.jitclass import jitclass
 
 
@@ -12,26 +12,32 @@ class Fibo:
 
     period: nb.int32
 
-    _h_win: Window
-    _l_win: Window
+    _h_win: Deque
+    _l_win: Deque
 
     def __init__(self, period: int = 144):
         self.offset = period - 1
         self.period = period
 
-        self._h_win = Window(period)
-        self._l_win = Window(period)
+        self._h_win = Deque(period)
+        self._l_win = Deque(period)
 
     def next(
         self, h: float, l: float
     ) -> typing.Tuple[
         float, float, float, float, float, float, float,
     ]:
-        h_arr = self._h_win.next(h)
-        l_arr = self._l_win.next(l)
+        self._h_win.append_left(h)
+        self._l_win.append_left(l)
 
-        h1 = np.max(h_arr)
-        l1 = np.min(l_arr)
+        h_arr = self._h_win.array()
+        l_arr = self._l_win.array()
+
+        h_max_idx = np.argmax(h_arr)
+        l_min_idx = np.argmin(l_arr)
+
+        h1 = h_arr[h_max_idx]
+        l1 = l_arr[l_min_idx]
         fark = h1 - l1
 
         fark236 = fark * 0.236
@@ -52,11 +58,8 @@ class Fibo:
         lh618 = h1 - fark618
         lh786 = h1 - fark786
 
-        hbars = np.argmax(h_arr)
-        lbars = np.argmin(l_arr)
-
-        # pick the farthest one from last (lower idx)
-        cond = hbars > lbars
+        # pick the farthest one from last bar
+        cond = h_max_idx > l_min_idx
         f236 = hl236 if cond else lh236
         f382 = hl382 if cond else lh382
         f500 = hl500 if cond else lh500
