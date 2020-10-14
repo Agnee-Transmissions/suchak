@@ -17,7 +17,7 @@ class MACD:
 
     _short_ema: EMA
     _long_ema: EMA
-    _signal_sma: SMA
+    _signal_sma: EMA
 
     def __init__(
         self, short_period: int = 12, long_period: int = 26, signal_period: int = 9
@@ -28,7 +28,7 @@ class MACD:
 
         self._short_ema = EMA(short_period)
         self._long_ema = EMA(long_period)
-        self._signal_sma = SMA(signal_period)
+        self._signal_sma = EMA(signal_period)
 
         self.offset = self._signal_sma.offset + max(
             self._short_ema.offset, self._long_ema.offset

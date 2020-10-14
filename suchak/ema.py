@@ -27,3 +27,10 @@ class EMA:
             self._ema = self._sma.next(x)
         self._ema = self._alpha * x + (1 - self._alpha) * self._ema
         return self._ema
+
+    def next_arr(self, x_arr):
+        out_len = len(x_arr)
+        ret = np.empty(out_len)
+        for i in range(out_len):
+            ret[i] = self.next(x_arr[i])
+        return ret

@@ -1,8 +1,9 @@
 import numba as nb
+import numpy as np
 
 from suchak.ema import EMA
 from suchak.jitclass import jitclass
-import numpy as np
+from suchak.rma import RMA
 
 
 @jitclass
@@ -17,11 +18,8 @@ class RSI:
     def __init__(self, period: int = 14):
         self.period = period
 
-        self._rma_up = EMA(period)
-        self._rma_up._alpha = 1 / period
-
-        self._rma_dn = EMA(period)
-        self._rma_dn._alpha = 1 / period
+        self._rma_up = RMA(period)
+        self._rma_dn = RMA(period)
 
         self.offset = self._rma_up.offset
 

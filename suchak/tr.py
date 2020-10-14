@@ -17,3 +17,10 @@ class TR:
             ret = max(h - l, abs(h - self._c1), abs(l - self._c1))
         self._c1 = c
         return ret
+
+    def next_arr(self, h_arr, l_arr, c_arr):
+        out_len = len(c_arr)
+        ret = np.empty(out_len)
+        for i in range(out_len):
+            ret[i] = self.next(h_arr[i], l_arr[i], c_arr[i])
+        return ret

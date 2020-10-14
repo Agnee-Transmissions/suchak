@@ -20,3 +20,10 @@ class SMA:
 
     def next(self, x: float) -> float:
         return np.sum(self._win.next(x)) / self.period
+
+    def next_arr(self, x_arr):
+        out_len = len(x_arr)
+        ret = np.empty(out_len)
+        for i in range(out_len):
+            ret[i] = self.next(x_arr[i])
+        return ret
