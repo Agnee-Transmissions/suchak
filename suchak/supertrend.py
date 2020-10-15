@@ -20,7 +20,7 @@ class Supertrend:
     _dn1: nb.double = np.nan
     _c1: nb.double = np.nan
 
-    def __init__(self, period: int = 5, factor: float = 3):
+    def __init__(self, period: int, factor: float):
         self.period = period
         self.factor = factor
 

@@ -15,7 +15,7 @@ class RSI:
     _rma_dn: EMA
     _c1: nb.double = np.nan
 
-    def __init__(self, period: int = 14):
+    def __init__(self, period: int):
         self.period = period
 
         self._rma_up = RMA(period)

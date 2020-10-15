@@ -8,3 +8,4 @@ from .rsi import RSI
 from .sma import SMA
 from .supertrend import Supertrend
 from .tr import TR
+from .zig_zag_pivots import ZigZagPivots

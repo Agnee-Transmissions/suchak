@@ -15,7 +15,7 @@ class Fibo:
     _h_win: Deque
     _l_win: Deque
 
-    def __init__(self, period: int = 144):
+    def __init__(self, period: int):
         self.offset = period - 1
         self.period = period
 

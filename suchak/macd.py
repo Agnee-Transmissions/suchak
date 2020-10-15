@@ -19,9 +19,7 @@ class MACD:
     _long_ema: EMA
     _signal_sma: EMA
 
-    def __init__(
-        self, short_period: int = 12, long_period: int = 26, signal_period: int = 9
-    ):
+    def __init__(self, short_period: int, long_period: int, signal_period: int):
         self.short_period = short_period
         self.long_period = long_period
         self.signal_period = signal_period
