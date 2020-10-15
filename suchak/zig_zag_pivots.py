@@ -45,6 +45,7 @@ class ZigZagPivots:
         shmma_sma = self._shmma_sma.next(src)
         shmma = shmma_sma + (6 * slope) / ((self.length + 1) * self.length)
 
+        # backup previous values
         top1 = self._top
         bot1 = self._bot
 
@@ -54,6 +55,7 @@ class ZigZagPivots:
         if shmma <= np.min(shmma_buf):
             self._bot = shmma
 
+        # only return if values didn't changed
         if self._top != top1:
             top = np.nan
         else:
