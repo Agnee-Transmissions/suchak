@@ -9,4 +9,12 @@ from .sma import SMA
 from .supertrend import Supertrend
 from .tr import TR
 from .zig_zag_pivots import ZigZagPivots
-from .vec import vec_array, vec_next, vec_type, vec_new
+from .vec import (
+    vec_array,
+    vec_next,
+    vec_type,
+    vec_new,
+    vec_next_left,
+    vec_append,
+    vec_append_left,
+)
