@@ -10,8 +10,20 @@ from suchak.jitclass import jitclass
 from suchak.sma import SMA
 from suchak.supertrend import Supertrend
 from suchak.tr import TR
+from suchak.vec import FloatVec
 
 SIZE = 64
+
+
+def test_vec():
+    vec = FloatVec(5)
+    for i in range(10):
+        vec.push(i)
+
+    arr = vec.array()
+    for i, j in zip(range(10), reversed(range(10))):
+        assert vec[j] == i
+        assert arr[j] == i
 
 
 def test_jitclass():
